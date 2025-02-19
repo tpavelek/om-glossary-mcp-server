@@ -13,6 +13,7 @@ format:
 	uv run ruff format src
 
 build:
+	rm -r dist
 	uv run python -m build
 
 publish:
