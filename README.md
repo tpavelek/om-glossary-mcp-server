@@ -10,40 +10,85 @@ This project implements a [Model Context Protocol](https://modelcontextprotocol.
 
 | Feature | API Path | Status |
 |---------|----------|--------|
-| **Metadata Assets** | | |
+| **Data Assets** | | |
+| List Databases | `/api/v1/databases` | ❌ |
+| Get Database | `/api/v1/databases/{id}` | ❌ |
+| Get Database by Name | `/api/v1/databases/name/{fqn}` | ❌ |
+| Export Database | `/api/v1/databases/name/{name}/export` | ❌ |
+| Import Database | `/api/v1/databases/name/{name}/import` | ❌ |
 | List Tables | `/api/v1/tables` | ❌ |
-| Get Table Details | `/api/v1/tables/{table_id}` | ❌ |
-| Create Table | `/api/v1/tables` | ❌ |
-| Update Table | `/api/v1/tables/{table_id}` | ❌ |
-| Delete Table | `/api/v1/tables/{table_id}` | ❌ |
-| **Database Services** | | |
+| Get Table | `/api/v1/tables/{id}` | ❌ |
+| Get Table by Name | `/api/v1/tables/name/{fqn}` | ❌ |
+| Export Table | `/api/v1/tables/name/{name}/export` | ❌ |
+| Import Table | `/api/v1/tables/name/{name}/import` | ❌ |
+| List Metrics | `/api/v1/metrics` | ❌ |
+| Get Metric | `/api/v1/metrics/{id}` | ❌ |
+| List Dashboards | `/api/v1/dashboards` | ❌ |
+| Get Dashboard | `/api/v1/dashboards/{id}` | ❌ |
+| Get Dashboard by Name | `/api/v1/dashboards/name/{fqn}` | ❌ |
+| List Reports | `/api/v1/reports` | ❌ |
+| Get Report | `/api/v1/reports/{id}` | ❌ |
+| List Pipelines | `/api/v1/pipelines` | ❌ |
+| Get Pipeline | `/api/v1/pipelines/{id}` | ❌ |
+| Get Pipeline by Name | `/api/v1/pipelines/name/{fqn}` | ❌ |
+| List Topics | `/api/v1/topics` | ❌ |
+| Get Topic | `/api/v1/topics/{id}` | ❌ |
+| **Services** | | |
 | List Database Services | `/api/v1/services/databaseServices` | ❌ |
-| Get Database Service | `/api/v1/services/databaseServices/{service_id}` | ❌ |
-| Create Database Service | `/api/v1/services/databaseServices` | ❌ |
-| Update Database Service | `/api/v1/services/databaseServices/{service_id}` | ❌ |
-| Delete Database Service | `/api/v1/services/databaseServices/{service_id}` | ❌ |
+| Get Database Service | `/api/v1/services/databaseServices/{id}` | ❌ |
+| Get Database Service by Name | `/api/v1/services/databaseServices/name/{fqn}` | ❌ |
+| Export Database Service | `/api/v1/services/databaseServices/name/{name}/export` | ❌ |
+| Import Database Service | `/api/v1/services/databaseServices/name/{name}/import` | ❌ |
+| List Dashboard Services | `/api/v1/services/dashboardServices` | ❌ |
+| Get Dashboard Service | `/api/v1/services/dashboardServices/{id}` | ❌ |
+| Get Dashboard Service by Name | `/api/v1/services/dashboardServices/name/{fqn}` | ❌ |
+| **Teams & Users** | | |
+| List Teams | `/api/v1/teams` | ❌ |
+| Get Team | `/api/v1/teams/{id}` | ❌ |
+| Get Team by Name | `/api/v1/teams/name/{fqn}` | ❌ |
+| Export Team | `/api/v1/teams/name/{name}/export` | ❌ |
+| Import Team | `/api/v1/teams/name/{name}/import` | ❌ |
+| List Users | `/api/v1/users` | ❌ |
+| Get User | `/api/v1/users/{id}` | ❌ |
+| Get User by Name | `/api/v1/users/name/{name}` | ❌ |
+| User Login | `/api/v1/users/login` | ❌ |
+| User Logout | `/api/v1/users/logout` | ❌ |
+| User Signup | `/api/v1/users/signup` | ❌ |
+| Change Password | `/api/v1/users/changePassword` | ❌ |
+| **Search** | | |
+| Search Query | `/api/v1/search/query` | ❌ |
+| Search Suggest | `/api/v1/search/suggest` | ❌ |
+| Search Aggregate | `/api/v1/search/aggregate` | ❌ |
+| Field Query | `/api/v1/search/fieldQuery` | ❌ |
+| Get Document | `/api/v1/search/get/{index}/doc/{id}` | ❌ |
 | **Tags & Classifications** | | |
-| List Classifications | `/api/v1/classifications` | ❌ |
-| Get Classification | `/api/v1/classifications/{classification_id}` | ❌ |
-| Create Classification | `/api/v1/classifications` | ❌ |
-| Update Classification | `/api/v1/classifications/{classification_id}` | ❌ |
-| Delete Classification | `/api/v1/classifications/{classification_id}` | ❌ |
+| List Tags | `/api/v1/tags` | ❌ |
+| Get Tag | `/api/v1/tags/{id}` | ❌ |
+| Get Tag by Name | `/api/v1/tags/name/{fqn}` | ❌ |
 | **Lineage** | | |
-| Get Entity Lineage | `/api/v1/lineage/{entity_id}` | ❌ |
-| Add Lineage Edge | `/api/v1/lineage` | ❌ |
-| Delete Lineage Edge | `/api/v1/lineage/{from_id}/{to_id}` | ❌ |
-| **Quality** | | |
-| List Test Suites | `/api/v1/testSuites` | ❌ |
-| Get Test Suite | `/api/v1/testSuites/{test_suite_id}` | ❌ |
-| Create Test Suite | `/api/v1/testSuites` | ❌ |
-| Update Test Suite | `/api/v1/testSuites/{test_suite_id}` | ❌ |
-| Delete Test Suite | `/api/v1/testSuites/{test_suite_id}` | ❌ |
-| **Glossary** | | |
+| Get Lineage | `/api/v1/lineage/getLineage` | ❌ |
+| Export Lineage | `/api/v1/lineage/export` | ❌ |
+| Get Entity Lineage by Name | `/api/v1/lineage/{entity}/name/{fqn}` | ❌ |
+| Get Entity Lineage by ID | `/api/v1/lineage/{entity}/{id}` | ❌ |
+| Get Lineage Edge | `/api/v1/lineage/getLineageEdge/{fromId}/{toId}` | ❌ |
+| Add/Update Lineage | `/api/v1/lineage` | ❌ |
+| Add/Update Lineage by FQN | `/api/v1/lineage/{fromEntity}/name/{fromFQN}/{toEntity}/name/{toFQN}` | ❌ |
+| Add/Update Lineage by ID | `/api/v1/lineage/{fromEntity}/{fromId}/{toEntity}/{toId}` | ❌ |
+| **Glossaries** | | |
 | List Glossaries | `/api/v1/glossaries` | ❌ |
-| Get Glossary | `/api/v1/glossaries/{glossary_id}` | ❌ |
-| Create Glossary | `/api/v1/glossaries` | ❌ |
-| Update Glossary | `/api/v1/glossaries/{glossary_id}` | ❌ |
-| Delete Glossary | `/api/v1/glossaries/{glossary_id}` | ❌ |
+| Get Glossary | `/api/v1/glossaries/{id}` | ❌ |
+| Get Glossary by Name | `/api/v1/glossaries/name/{fqn}` | ❌ |
+| Export Glossary | `/api/v1/glossaries/name/{name}/export` | ❌ |
+| Import Glossary | `/api/v1/glossaries/name/{name}/import` | ❌ |
+| List Glossary Terms | `/api/v1/glossaryTerms` | ❌ |
+| Get Glossary Term | `/api/v1/glossaryTerms/{id}` | ❌ |
+| Get Glossary Term by Name | `/api/v1/glossaryTerms/name/{fqn}` | ❌ |
+| Add Assets to Term | `/api/v1/glossaryTerms/{id}/assets/add` | ❌ |
+| Remove Assets from Term | `/api/v1/glossaryTerms/{id}/assets/remove` | ❌ |
+| Validate Term Tags | `/api/v1/glossaryTerms/{id}/tags/validate` | ❌ |
+| **Usage** | | |
+| Get Entity Usage by Name | `/api/v1/usage/{entity}/name/{fqn}` | ❌ |
+| Get Entity Usage by ID | `/api/v1/usage/{entity}/{id}` | ❌ |
 
 ## Setup
 
