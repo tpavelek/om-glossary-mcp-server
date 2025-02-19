@@ -102,7 +102,7 @@ Set one of the following authentication methods:
 #### Token Authentication (Recommended)
 ```
 OPENMETADATA_HOST=<your-openmetadata-host>
-OPENMETADATA_API_TOKEN=<your-api-token>
+OPENMETADATA_JWT_TOKEN=<your-jwt-token>
 ```
 
 #### Basic Authentication
