@@ -13,8 +13,12 @@ class Config:
     def from_env(cls) -> "Config":
         if not os.getenv("OPENMETADATA_HOST"):
             raise ValueError("OPENMETADATA_HOST is not set")
-        if not os.getenv("OPENMETADATA_JWT_TOKEN") and not (os.getenv("OPENMETADATA_USERNAME") and os.getenv("OPENMETADATA_PASSWORD")):
-            raise ValueError("Either OPENMETADATA_JWT_TOKEN or OPENMETADATA_USERNAME and OPENMETADATA_PASSWORD must be set")
+        if not os.getenv("OPENMETADATA_JWT_TOKEN") and not (
+            os.getenv("OPENMETADATA_USERNAME") and os.getenv("OPENMETADATA_PASSWORD")
+        ):
+            raise ValueError(
+                "Either OPENMETADATA_JWT_TOKEN or OPENMETADATA_USERNAME and OPENMETADATA_PASSWORD must be set"
+            )
 
         return cls(
             OPENMETADATA_HOST=os.getenv("OPENMETADATA_HOST"),

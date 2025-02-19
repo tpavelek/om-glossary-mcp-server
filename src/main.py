@@ -27,7 +27,7 @@ def main(port: int, transport: str) -> int:
         host=config.OPENMETADATA_HOST,
         api_token=config.OPENMETADATA_JWT_TOKEN,
         username=config.OPENMETADATA_USERNAME,
-        password=config.OPENMETADATA_PASSWORD
+        password=config.OPENMETADATA_PASSWORD,
     )
 
     # Create MCP server
@@ -52,6 +52,7 @@ def main(port: int, transport: str) -> int:
     except Exception as e:
         print(f"Server failed to start: {str(e)}")
         return 1
+
 
 if __name__ == "__main__":
     main()

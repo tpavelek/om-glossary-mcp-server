@@ -8,5 +8,6 @@ TABLE_RESOURCE = Resource(
     description="A table in the database",
 )
 
+
 def list_all_resources() -> List[Resource]:
     return [TABLE_RESOURCE]
