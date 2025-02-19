@@ -16,9 +16,12 @@ This project implements a [Model Context Protocol](https://modelcontextprotocol.
 | Get Database by Name | `/api/v1/databases/name/{fqn}` | ❌ |
 | Export Database | `/api/v1/databases/name/{name}/export` | ❌ |
 | Import Database | `/api/v1/databases/name/{name}/import` | ❌ |
-| List Tables | `/api/v1/tables` | ❌ |
-| Get Table | `/api/v1/tables/{id}` | ❌ |
-| Get Table by Name | `/api/v1/tables/name/{fqn}` | ❌ |
+| List Tables | `/api/v1/tables` | ✅ |
+| Get Table | `/api/v1/tables/{id}` | ✅ |
+| Get Table by Name | `/api/v1/tables/name/{fqn}` | ✅ |
+| Create Table | `/api/v1/tables` | ✅ |
+| Update Table | `/api/v1/tables/{id}` | ✅ |
+| Delete Table | `/api/v1/tables/{id}` | ✅ |
 | Export Table | `/api/v1/tables/name/{name}/export` | ❌ |
 | Import Table | `/api/v1/tables/name/{name}/import` | ❌ |
 | List Metrics | `/api/v1/metrics` | ❌ |
