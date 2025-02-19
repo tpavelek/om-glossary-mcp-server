@@ -6,6 +6,12 @@ run:
 run-sse:
 	uv run python src --transport sse
 
+lint:
+	uv run ruff check src --fix
+
+format:
+	uv run ruff format src
+
 build:
 	uv run python -m build
 
