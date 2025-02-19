@@ -1,6 +1,6 @@
 [project]
 name = "mcp-server-openmetadata"
-version = "0.1.0"
+version = "0.1.0a1"
 description = "Model Context Protocol (MCP) server for OpenMetadata"
 authors = [
     { name = "Gyeongmo Yang", email = "me@gmyang.dev" }
@@ -44,7 +44,7 @@ requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [project.scripts]
-mcp-server-openmetadata = "src.server:main"
+mcp-server-openmetadata = "src.main:main"
 
 [tool.hatch.build.targets.wheel]
 packages = ["src"]

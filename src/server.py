@@ -7,9 +7,10 @@ from starlette.applications import Starlette
 
 def get_server_runner(app: Starlette, transport: str, **kwargs) -> Callable:
     if transport == "stdio":
-        return _get_stdio_server_runner(app, **kwargs)
+        return _get_stdio_server_runner(app)
     elif transport == "sse":
-        return _get_sse_server_runner(app, **kwargs)
+        port = kwargs.pop("port")
+        return _get_sse_server_runner(app, port)
     else:
         raise ValueError(f"Invalid transport: {transport}")
 
