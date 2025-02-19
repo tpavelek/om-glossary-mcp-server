@@ -125,7 +125,7 @@ Add to your `claude_desktop_config.json` using one of the following authenticati
       "args": ["mcp-server-openmetadata"],
       "env": {
         "OPENMETADATA_HOST": "https://your-openmetadata-host",
-        "OPENMETADATA_API_TOKEN": "your-api-token"
+        "OPENMETADATA_JWT_TOKEN": "your-jwt-token"
       }
     }
   }
@@ -165,7 +165,7 @@ Alternative configuration using `uv`:
       ],
       "env": {
         "OPENMETADATA_HOST": "https://your-openmetadata-host",
-        "OPENMETADATA_API_TOKEN": "your-api-token"
+        "OPENMETADATA_JWT_TOKEN": "your-jwt-token"
       }
     }
   }
