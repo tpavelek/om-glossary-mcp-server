@@ -2,12 +2,12 @@ from typing import Any, Dict, List
 
 import click
 from mcp.server import Server
-from mcp.types import Resource, Tool, TextContent
+from mcp.types import Resource, TextContent, Tool
 
 from src.config import Config
-from src.openmetadata import OpenMetadataClient
 from src.mcp_components.resources import list_all_resources
-from src.mcp_components.tools import list_all_tools, call_tool
+from src.mcp_components.tools import call_tool, list_all_tools
+from src.openmetadata import OpenMetadataClient
 from src.server import get_server_runner
 
 DEFAULT_PORT = 8000

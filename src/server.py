@@ -1,8 +1,8 @@
 from typing import Callable
 
 import anyio
-from starlette.applications import Starlette
 from mcp.server.stdio import stdio_server
+from starlette.applications import Starlette
 
 
 def get_server_runner(app: Starlette, transport: str, **kwargs) -> Callable:
