@@ -2,6 +2,10 @@
 
 A Model Context Protocol (MCP) server implementation for OpenMetadata, enabling seamless integration with MCP clients. This project provides a standardized way to interact with OpenMetadata through the Model Context Protocol.
 
+<a href="https://glama.ai/mcp/servers/lvgl5cmxa6">
+  <img width="380" height="200" src="https://glama.ai/mcp/servers/lvgl5cmxa6/badge" alt="Server for OpenMetadata MCP server" />
+</a>
+
 ## About
 
 This project implements a [Model Context Protocol](https://modelcontextprotocol.io/introduction) server that wraps OpenMetadata's REST API, allowing MCP clients to interact with OpenMetadata in a standardized way.
