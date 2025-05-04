@@ -162,3 +162,131 @@ class OpenMetadataClient:
         params = {"hardDelete": hard_delete, "recursive": recursive}
         response = self.session.delete(f"{self.host}/api/v1/tables/{table_id}", params=params)
         response.raise_for_status()
+
+    # --- Glossary Methods ---
+
+    def list_glossaries(
+        self,
+        limit: int = 10,
+        fields: Optional[str] = None,
+        before: Optional[str] = None,
+        after: Optional[str] = None,
+        include: str = "non-deleted",
+    ) -> Dict[str, Any]:
+        """List glossaries with pagination and filtering.
+
+        Args:
+            limit: Maximum number of glossaries to return (1 to 1000000)
+            fields: Comma-separated list of fields to include (e.g., owners,tags,reviewers,usageCount,termCount,domain,extension)
+            before: Returns list of glossaries before this cursor
+            after: Returns list of glossaries after this cursor
+            include: Include all, deleted, or non-deleted entities (default: non-deleted)
+
+        Returns:
+            Dictionary containing glossary list and metadata
+
+        Raises:
+            OpenMetadataError: If the API request fails
+        """
+        params = {
+            "limit": min(max(1, limit), 1000000),
+            "include": include,
+        }
+        if fields:
+            params["fields"] = fields
+        if before:
+            params["before"] = before
+        if after:
+            params["after"] = after
+
+        response = self.session.get(f"{self.host}/api/v1/glossaries", params=params)
+        response.raise_for_status()
+        return response.json()
+
+    def get_glossary_by_name(self, fqn: str, fields: Optional[str] = None, include: str = "non-deleted") -> Dict[str, Any]:
+        """Get details of a specific glossary by fully qualified name.
+
+        Args:
+            fqn: Fully qualified name of the glossary
+            fields: Comma-separated list of fields to include
+            include: Include all, deleted, or non-deleted entities (default: non-deleted)
+
+        Returns:
+            Glossary details
+
+        Raises:
+            OpenMetadataError: If the API request fails
+        """
+        params = {"include": include}
+        if fields:
+            params["fields"] = fields
+
+        response = self.session.get(f"{self.host}/api/v1/glossaries/name/{fqn}", params=params)
+        response.raise_for_status()
+        return response.json()
+
+    # --- Glossary Term Methods ---
+
+    def list_glossary_terms(
+        self,
+        glossary_id: Optional[str] = None,
+        limit: int = 10,
+        fields: Optional[str] = None,
+        before: Optional[str] = None,
+        after: Optional[str] = None,
+        include: str = "non-deleted",
+    ) -> Dict[str, Any]:
+        """List glossary terms with pagination and filtering.
+
+        Args:
+            glossary_id: UUID of the glossary to filter terms from.
+            limit: Maximum number of terms to return (1 to 1000000)
+            fields: Comma-separated list of fields to include (e.g., owners,tags,reviewers,usageCount,relatedTerms,synonyms,domain,extension)
+            before: Returns list of terms before this cursor
+            after: Returns list of terms after this cursor
+            include: Include all, deleted, or non-deleted entities (default: non-deleted)
+
+        Returns:
+            Dictionary containing glossary term list and metadata
+
+        Raises:
+            OpenMetadataError: If the API request fails
+        """
+        params = {
+            "limit": min(max(1, limit), 1000000),
+            "include": include,
+        }
+        if glossary_id:
+            params["glossary"] = glossary_id
+        if fields:
+            params["fields"] = fields
+        if before:
+            params["before"] = before
+        if after:
+            params["after"] = after
+
+        response = self.session.get(f"{self.host}/api/v1/glossaryTerms", params=params)
+        response.raise_for_status()
+        return response.json()
+
+    def get_glossary_term_by_name(self, fqn: str, fields: Optional[str] = None, include: str = "non-deleted") -> Dict[str, Any]:
+        """Get details of a specific glossary term by fully qualified name.
+
+        Args:
+            fqn: Fully qualified name of the glossary term (e.g., 'GlossaryName.TermName')
+            fields: Comma-separated list of fields to include
+            include: Include all, deleted, or non-deleted entities (default: non-deleted)
+
+        Returns:
+            Glossary term details
+
+        Raises:
+            OpenMetadataError: If the API request fails
+        """
+        params = {"include": include}
+        if fields:
+            params["fields"] = fields
+
+        response = self.session.get(f"{self.host}/api/v1/glossaryTerms/name/{fqn}", params=params)
+        response.raise_for_status()
+        return response.json()
