@@ -205,31 +205,32 @@ CREATE_GLOSSARY_TERM_TOOL = Tool(
 
 DELETE_GLOSSARY_TERM_TOOL = Tool(
     name="delete_glossary_term",
-    description="Delete a glossary term by name",
+    description="Delete a glossary term by its ID.",
     inputSchema={
         "type": "object",
         "properties": {
-            "name": {"type": "string", "description": "Name of the glossary term to delete"},
-            "glossary_fqn": {"type": "string", "description": "Fully qualified name of the glossary"},
+            "term_id": {"type": "string", "description": "UUID of the glossary term to delete", "format": "uuid"},
+            "hard_delete": {"type": "boolean", "description": "Whether to perform a hard delete", "default": False},
+            "recursive": {"type": "boolean", "description": "Whether to recursively delete children", "default": False},
         },
-        "required": ["name", "glossary_fqn"]
+        "required": ["term_id"],
     },
 )
 
 UPDATE_GLOSSARY_TERM_TOOL = Tool(
     name="update_glossary_term",
-    description="Update an existing glossary term using JSON Patch.",
+    description="Update an existing glossary term using JSON Patch via its ID.",
     inputSchema={
         "type": "object",
         "properties": {
-            "fqn": {"type": "string", "description": "Fully qualified name of the glossary term (e.g., 'GlossaryName.TermName')"},
+            "term_id": {"type": "string", "description": "UUID of the glossary term to update", "format": "uuid"},
             "patch_data": {
                 "type": "array",
                 "description": "JSON Patch operations as a list of dictionaries. Example: [{\"op\": \"replace\", \"path\": \"/description\", \"value\": \"New description\"}]",
                 "items": {"type": "object"},
             },
         },
-        "required": ["fqn", "patch_data"],
+        "required": ["term_id", "patch_data"],
     },
 )
 
@@ -340,14 +341,15 @@ def call_tool(name: str, arguments: Dict[str, Any], client: OpenMetadataClient) 
         )
         return [TextContent(type="text", text=str(results))]
     elif name == DELETE_GLOSSARY_TERM_TOOL.name:
-        name_arg = arguments["name"]
-        glossary_fqn = arguments["glossary_fqn"]
-        client.delete_glossary_term_by_name(fqn=f"{glossary_fqn}.{name_arg}")
-        return [TextContent(type="text", text=f"Successfully deleted glossary term: {name_arg}")]
+        term_id = arguments["term_id"]
+        hard_delete = arguments.get("hard_delete", False)
+        recursive = arguments.get("recursive", False)
+        client.delete_glossary_term(term_id=term_id, hard_delete=hard_delete, recursive=recursive)
+        return [TextContent(type="text", text=f"Glossary term {term_id} deleted successfully.")]
     elif name == UPDATE_GLOSSARY_TERM_TOOL.name:
-        fqn = arguments["fqn"]
+        term_id = arguments["term_id"]
         patch_data = arguments["patch_data"]
-        results = client.update_glossary_term(fqn=fqn, patch_data=patch_data)
+        results = client.update_glossary_term(term_id=term_id, patch_data=patch_data)
         return [TextContent(type="text", text=str(results))]
     else:
         raise ValueError(f"Unknown tool: {name}")

@@ -335,11 +335,11 @@ class OpenMetadataClient:
         response.raise_for_status()
         return response.json()
 
-    def update_glossary_term(self, fqn: str, patch_data: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Update an existing glossary term using JSON Patch.
+    def update_glossary_term(self, term_id: str, patch_data: List[Dict[str, Any]]) -> Dict[str, Any]:
+        """Update an existing glossary term using JSON Patch via its ID.
 
         Args:
-            fqn: Fully qualified name of the glossary term (e.g., 'GlossaryName.TermName')
+            term_id: UUID of the glossary term
             patch_data: JSON Patch operations as a list of dictionaries.
                         Example: [{"op": "replace", "path": "/description", "value": "New description"}]
 
@@ -350,21 +350,21 @@ class OpenMetadataClient:
             OpenMetadataError: If the API request fails
         """
         headers = {"Content-Type": "application/json-patch+json"}
-        response = self.session.patch(f"{self.host}/api/v1/glossaryTerms/name/{fqn}", json=patch_data, headers=headers)
+        response = self.session.patch(f"{self.host}/api/v1/glossaryTerms/{term_id}", json=patch_data, headers=headers)
         response.raise_for_status()
         return response.json()
 
-    def delete_glossary_term(self, glossary_fqn: str, name: str) -> None:
-        """Delete a glossary term by name.
+    def delete_glossary_term(self, term_id: str, hard_delete: bool = False, recursive: bool = False) -> None:
+        """Delete a glossary term by its ID.
 
         Args:
-            glossary_fqn: Fully qualified name of the glossary.
-            name: Name of the glossary term to delete.
+            term_id: UUID of the glossary term to delete.
+            hard_delete: Whether to perform a hard delete (default: False).
+            recursive: Whether to recursively delete children (default: False).
 
         Raises:
             OpenMetadataError: If the API request fails
         """
-        # Note: API uses fqn which includes glossary, e.g., GlossaryName.TermName
-        term_fqn = f"{glossary_fqn}.{name}"
-        response = self.session.delete(f"{self.host}/api/v1/glossaryTerms/name/{term_fqn}")
+        params = {"hardDelete": hard_delete, "recursive": recursive}
+        response = self.session.delete(f"{self.host}/api/v1/glossaryTerms/{term_id}", params=params)
         response.raise_for_status()
