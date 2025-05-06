@@ -1,6 +1,10 @@
-from typing import Any, Dict, Optional
+from typing import Any, Dict, Optional, List
 
 import httpx
+import json
+import logging
+
+logger = logging.getLogger(__name__)
 
 
 class OpenMetadataError(Exception):
@@ -290,3 +294,77 @@ class OpenMetadataClient:
         response = self.session.get(f"{self.host}/api/v1/glossaryTerms/name/{fqn}", params=params)
         response.raise_for_status()
         return response.json()
+
+    def delete_glossary_term_by_name(self, fqn: str, hard_delete: bool = False, recursive: bool = False) -> None:
+        """Delete a glossary term by fully qualified name.
+
+        Args:
+            fqn: Fully qualified name of the glossary term to delete (e.g., 'GlossaryName.TermName')
+            hard_delete: Whether to perform a hard delete
+            recursive: Whether to recursively delete children
+
+        Raises:
+            OpenMetadataError: If the API request fails
+        """
+        params = {"hardDelete": hard_delete, "recursive": recursive}
+        response = self.session.delete(f"{self.host}/api/v1/glossaryTerms/name/{fqn}", params=params)
+        response.raise_for_status()
+
+    def create_glossary_term(self, name: str, display_name: str, description: str, glossary_fqn: str) -> Dict[str, Any]:
+        """Create a new glossary term.
+
+        Args:
+            name: Name of the glossary term (must be unique within the glossary)
+            display_name: Display name of the glossary term
+            description: Description of the glossary term
+            glossary_fqn: Fully qualified name of the parent glossary
+
+        Returns:
+            Created glossary term details
+
+        Raises:
+            OpenMetadataError: If the API request fails
+        """
+        payload = {
+            "name": name,
+            "displayName": display_name,
+            "description": description,
+            "glossary": glossary_fqn,
+        }
+        response = self.session.post(f"{self.host}/api/v1/glossaryTerms", json=payload)
+        response.raise_for_status()
+        return response.json()
+
+    def update_glossary_term(self, fqn: str, patch_data: List[Dict[str, Any]]) -> Dict[str, Any]:
+        """Update an existing glossary term using JSON Patch.
+
+        Args:
+            fqn: Fully qualified name of the glossary term (e.g., 'GlossaryName.TermName')
+            patch_data: JSON Patch operations as a list of dictionaries.
+                        Example: [{"op": "replace", "path": "/description", "value": "New description"}]
+
+        Returns:
+            Updated glossary term details
+
+        Raises:
+            OpenMetadataError: If the API request fails
+        """
+        headers = {"Content-Type": "application/json-patch+json"}
+        response = self.session.patch(f"{self.host}/api/v1/glossaryTerms/name/{fqn}", json=patch_data, headers=headers)
+        response.raise_for_status()
+        return response.json()
+
+    def delete_glossary_term(self, glossary_fqn: str, name: str) -> None:
+        """Delete a glossary term by name.
+
+        Args:
+            glossary_fqn: Fully qualified name of the glossary.
+            name: Name of the glossary term to delete.
+
+        Raises:
+            OpenMetadataError: If the API request fails
+        """
+        # Note: API uses fqn which includes glossary, e.g., GlossaryName.TermName
+        term_fqn = f"{glossary_fqn}.{name}"
+        response = self.session.delete(f"{self.host}/api/v1/glossaryTerms/name/{term_fqn}")
+        response.raise_for_status()
